@@ -1,0 +1,38 @@
+kubectl run nginx-pod-test1 --generator=run-pod/v1 --image=nginx 
+
+kubectl run nginx-pod-test2 --generator=run-pod/v1 --image=nginx
+
+
+kubectl expose pod nginx-pod-test1 --type=NodePort --port=80 --target-port=80 --name=test-service1
+
+kubectl expose pod nginx-pod-test2 --type=NodePort --port=80 --target-port=80 --name=test-service2
+
+
+sleep 5
+
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'echo "This is pod1 - html/index.html" > /usr/share/nginx/html/index.html'
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'echo "This is pod1 - html/file.html" > /usr/share/nginx/html/file.html'
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'echo "This is pod1 - html/file" > /usr/share/nginx/html/file'
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'mkdir /usr/share/nginx/html/test'
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'echo "This is pod1 - html/test/index.html" > /usr/share/nginx/html/test/index.html'
+
+kubectl exec nginx-pod-test1 -- /bin/bash -c 'echo "This is pod1 - html/test/file.html" > /usr/share/nginx/html/test/file.html'
+
+
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'echo "This is pod2 - html/index.html" > /usr/share/nginx/html/index.html'
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'echo "This is pod2 - html/file.html" > /usr/share/nginx/html/file.html'
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'echo "This is pod2 - html/file" > /usr/share/nginx/html/file'
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'mkdir /usr/share/nginx/html/test'
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'echo "This is pod2 - html/test/index.html" > /usr/share/nginx/html/test/index.html'
+
+kubectl exec nginx-pod-test2 -- /bin/bash -c 'echo "This is pod2 - html/test/file.html" > /usr/share/nginx/html/test/file.html'

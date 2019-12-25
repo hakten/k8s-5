@@ -1,0 +1,24 @@
+kubectl run test-pod1 --generator=run-pod/v1 --image=gcr.io/google-samples/hello-app:1.0
+
+kubectl run test-pod2 --generator=run-pod/v1 --image=gcr.io/google-samples/hello-app:2.0
+
+kubectl run test-pod3 --generator=run-pod/v1 --image=nginx
+
+kubectl run test-pod4 --generator=run-pod/v1 --image=nginx
+
+
+kubectl expose pod test-pod1 --type=NodePort --port=80 --target-port=8080 --name=test-service1
+
+kubectl expose pod test-pod2 --type=NodePort --port=80 --target-port=8080 --name=test-service2
+
+kubectl expose pod test-pod3 --type=NodePort --port=80 --target-port=80 --name=test-service3
+
+kubectl expose pod test-pod4 --type=NodePort --port=80 --target-port=80 --name=test-service4
+
+
+sleep 5
+
+
+kubectl exec test-pod3 -- /bin/bash -c 'echo "Hello, world!<br>Version: 3.0.0<br>Hostname: test-pod3" > /usr/share/nginx/html/index.html'
+
+kubectl exec test-pod4 -- /bin/bash -c 'echo "Hello, world!<br>Version: 4.0.0<br>Hostname: test-pod4" > /usr/share/nginx/html/index.html'
